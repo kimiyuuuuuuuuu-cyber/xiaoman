@@ -576,6 +576,7 @@ footer {
 .characters {
   position: relative;
   min-height: 100svh;
+  padding-top: clamp(72px, 10svh, 128px);
   overflow: hidden;
   border-top: 0;
   isolation: isolate;
@@ -633,6 +634,7 @@ footer {
   z-index: 1;
   width: 100%;
   padding: 9svh 5vw 10svh;
+  transition: transform 850ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .character-label {
@@ -652,6 +654,7 @@ footer {
   place-items: center;
   border: 1px solid rgba(253, 223, 106, 0.58);
   border-radius: 50%;
+  transition: border-color 350ms ease, transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .character-copy h3 {
@@ -661,6 +664,7 @@ footer {
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.055em;
+  transition: color 400ms ease, letter-spacing 750ms cubic-bezier(0.16, 1, 0.3, 1), text-shadow 400ms ease;
 }
 
 .character-facts {
@@ -693,6 +697,7 @@ footer {
 .character-lead {
   max-width: 640px;
   margin: 0;
+  transition: color 400ms ease, transform 750ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .character-more {
@@ -715,7 +720,11 @@ footer {
   transition: color 250ms ease, padding 500ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.character-more span:last-child { color: var(--yellow); font-size: 14px; }
+.character-more span:last-child {
+  color: var(--yellow);
+  font-size: 14px;
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
 .character-details-copy { color: rgba(242, 241, 237, 0.8); }
 
 .character-details-copy p {
@@ -725,6 +734,21 @@ footer {
 }
 
 @media (hover: hover) {
+  .character-card:hover .character-copy { transform: translateY(-8px); }
+  .character-card:hover .character-copy h3 {
+    color: rgba(242, 241, 237, 0.76);
+    letter-spacing: -0.045em;
+    text-shadow: 0 14px 40px rgba(0, 0, 0, 0.34);
+  }
+  .character-card:hover .character-label span:first-child {
+    border-color: var(--yellow);
+    transform: rotate(8deg);
+  }
+  .character-card:hover .character-lead {
+    color: rgba(242, 241, 237, 0.92);
+    transform: translateX(4px);
+  }
+  .character-card:hover .character-more span:last-child { transform: translate(3px, -3px); }
   .character-more:hover { padding-right: 8px; padding-left: 8px; color: var(--yellow); }
   .character-details-copy p:hover { color: rgba(255, 255, 252, 0.96); transform: translateX(4px); }
 }
@@ -1074,6 +1098,7 @@ footer {
   .director-note-copy { font-size: 11px; line-height: 1.9; }
 
   .characters-heading { min-height: 165px; padding: 28px 14px 26px; }
+  .characters { padding-top: 58px; }
   .characters h2 { font-size: clamp(1.8rem, 9vw, 2.8rem); }
 
   .characters-grid { grid-template-columns: 1fr; min-height: 0; }
@@ -1140,6 +1165,10 @@ footer {
   .director-note-copy p,
   .director-note-copy p::before,
   .character-more,
+  .character-copy,
+  .character-copy h3,
+  .character-label span:first-child,
+  .character-lead,
   .character-details-copy p,
   .storyboard-link,
   .storyboard-link img,
