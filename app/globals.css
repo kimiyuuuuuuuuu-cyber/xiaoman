@@ -439,6 +439,7 @@ footer {
   position: relative;
   min-height: 100svh;
   overflow: hidden;
+  border-top: 0;
   isolation: isolate;
   background: url('/director-statement-background.jpg') 44% center / cover no-repeat;
 }
@@ -453,7 +454,24 @@ footer {
     linear-gradient(180deg, rgba(5, 5, 5, 0.08), rgba(5, 5, 5, 0.38));
 }
 
+.director-note::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+  height: clamp(120px, 18svh, 210px);
+  background: url('/credits-background.jpg') center bottom / 100vw auto no-repeat;
+  opacity: 0.86;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.82) 24%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.82) 24%, transparent 100%);
+  pointer-events: none;
+}
+
 .director-note-inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -485,11 +503,40 @@ footer {
 }
 
 .director-note-copy p {
+  position: relative;
   margin: 0 0 17px;
+  transition: color 350ms ease, text-shadow 350ms ease, transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.director-note-copy p::before {
+  content: "";
+  position: absolute;
+  top: 0.2em;
+  bottom: 0.2em;
+  left: -14px;
+  width: 1px;
+  background: var(--yellow);
+  opacity: 0;
+  transform: scaleY(0.28);
+  transform-origin: center;
+  transition: opacity 300ms ease, transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .director-note-copy p:last-child {
   margin-bottom: 0;
+}
+
+@media (hover: hover) {
+  .director-note-copy p:hover {
+    color: rgba(255, 255, 252, 0.96);
+    text-shadow: 0 6px 24px rgba(0, 0, 0, 0.34);
+    transform: translateX(5px);
+  }
+
+  .director-note-copy p:hover::before {
+    opacity: 0.8;
+    transform: scaleY(1);
+  }
 }
 
 .documents { padding-bottom: 120px; }
@@ -801,6 +848,11 @@ footer {
     background: linear-gradient(180deg, rgba(5, 5, 5, 0.28) 0%, rgba(5, 5, 5, 0.8) 42%, rgba(5, 5, 5, 0.96) 100%);
   }
 
+  .director-note::after {
+    height: 110px;
+    background-size: auto 100svh;
+  }
+
   .director-note-inner {
     justify-content: flex-start;
     width: 100%;
@@ -860,6 +912,8 @@ footer {
   .still-button::after,
   .still-index,
   .still-open,
+  .director-note-copy p,
+  .director-note-copy p::before,
   .storyboard-link,
   .storyboard-link img,
   .site-header a,
