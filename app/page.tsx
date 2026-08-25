@@ -141,7 +141,7 @@ export default function Home() {
           <a href="#top" className="wordmark" aria-label="小満・先頭へ">小満</a>
           <nav aria-label="主要ナビゲーション">
             <a href="#作品">作品スチル</a>
-            <a href="#クレジット">クレジット</a>
+            <a href="#監督">監督</a>
             <a href="#監督ノート">監督ノート</a>
             <a href="#脚本">脚本</a>
           </nav>
@@ -218,7 +218,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="credits" id="クレジット" aria-labelledby="credits-title">
+      <section className="credits" id="監督" aria-labelledby="credits-title">
         <div className="credits-compact">
           <div className="credit-identity">
             <h2 id="credits-title">虞 礼鋒</h2>
@@ -231,6 +231,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <div className="director-transition" aria-hidden="true" />
 
       <section className="director-note" id="監督ノート" aria-labelledby="director-note-title">
         <div className="director-note-inner">

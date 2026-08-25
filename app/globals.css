@@ -362,6 +362,18 @@ footer {
     url('/credits-background.jpg') center / cover no-repeat;
 }
 
+.credits::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  height: clamp(92px, 13svh, 150px);
+  background: linear-gradient(180deg, transparent 0%, rgba(5, 5, 5, 0.3) 40%, var(--black) 100%);
+  pointer-events: none;
+}
+
 .credits .section-meta {
   background: rgba(5, 5, 5, 0.18);
   backdrop-filter: blur(2px);
@@ -435,6 +447,11 @@ footer {
 
 .credit-roles strong { color: inherit; font-weight: 700; }
 
+.director-transition {
+  height: clamp(120px, 17svh, 190px);
+  background: var(--black);
+}
+
 .director-note {
   position: relative;
   min-height: 100svh;
@@ -461,11 +478,8 @@ footer {
   right: 0;
   left: 0;
   z-index: 0;
-  height: clamp(120px, 18svh, 210px);
-  background: url('/credits-background.jpg') center bottom / 100vw auto no-repeat;
-  opacity: 0.86;
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.82) 24%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.82) 24%, transparent 100%);
+  height: clamp(92px, 13svh, 150px);
+  background: linear-gradient(180deg, var(--black) 0%, rgba(5, 5, 5, 0.34) 58%, transparent 100%);
   pointer-events: none;
 }
 
@@ -846,11 +860,6 @@ footer {
 
   .director-note::before {
     background: linear-gradient(180deg, rgba(5, 5, 5, 0.28) 0%, rgba(5, 5, 5, 0.8) 42%, rgba(5, 5, 5, 0.96) 100%);
-  }
-
-  .director-note::after {
-    height: 110px;
-    background-size: auto 100svh;
   }
 
   .director-note-inner {
