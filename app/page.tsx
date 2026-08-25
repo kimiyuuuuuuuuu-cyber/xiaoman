@@ -225,7 +225,13 @@ export default function Home() {
           <p className="eyebrow">短編映画</p>
           <div className="hero-title-group">
             <h1 id="film-title"><img src="/brand/shoman-title-user-en.png" alt="小満 — Whose Summer Was It" /></h1>
-            <a className="film-link" href="#映像" aria-label="本編映像の入口へ">
+            <a
+              className="film-link"
+              href="https://youtu.be/2rvIpCJllzY"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="短編映画『小満』本編をYouTubeで見る"
+            >
               <span>本編を見る</span><span aria-hidden="true">↘</span>
             </a>
             <div className="synopsis" id="物語">
