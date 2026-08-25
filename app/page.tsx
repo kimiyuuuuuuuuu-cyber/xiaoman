@@ -2,23 +2,24 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-const stills = [
-  '/stills/field.png',
-  '/stills/room.png',
-  '/stills/rain.png',
-  '/stills/train.png',
-];
+const stills = Array.from(
+  { length: 12 },
+  (_, index) => `/stills-real/${String(index + 1).padStart(2, '0')}.jpg`,
+);
 
 const gallery = [
-  { src: stills[0], ratio: '4 / 5', position: '44% center' },
-  { src: stills[2], ratio: '16 / 10', position: 'center' },
-  { src: stills[1], ratio: '3 / 4', position: 'center' },
-  { src: stills[3], ratio: '4 / 3', position: '60% center' },
-  { src: stills[2], ratio: '3 / 5', position: '35% center' },
-  { src: stills[0], ratio: '16 / 9', position: 'center 72%' },
-  { src: stills[1], ratio: '5 / 4', position: 'center 48%' },
-  { src: stills[3], ratio: '3 / 4', position: '72% center' },
-  { src: stills[0], ratio: '4 / 3', position: '24% center' },
+  { src: stills[7], ratio: '4 / 5', position: '54% center' },
+  { src: stills[0], ratio: '16 / 10', position: 'center' },
+  { src: stills[3], ratio: '3 / 4', position: '52% center' },
+  { src: stills[5], ratio: '16 / 11', position: 'center' },
+  { src: stills[1], ratio: '4 / 5', position: '42% center' },
+  { src: stills[8], ratio: '16 / 9', position: 'center' },
+  { src: stills[10], ratio: '3 / 4', position: '42% center' },
+  { src: stills[6], ratio: '16 / 11', position: 'center' },
+  { src: stills[4], ratio: '4 / 5', position: '60% center' },
+  { src: stills[9], ratio: '16 / 10', position: '38% center' },
+  { src: stills[2], ratio: '5 / 4', position: 'center' },
+  { src: stills[11], ratio: '16 / 9', position: 'center' },
 ];
 
 type Stamp = {
@@ -42,13 +43,13 @@ export default function Home() {
       src: stills[id % stills.length],
       x,
       y,
-      angle: ((id % 5) - 2) * 1.2,
+      angle: ((id % 5) - 2) * 0.7,
     };
 
-    setStamps((current) => [...current.slice(-6), stamp]);
+    setStamps((current) => [...current.slice(-7), stamp]);
     window.setTimeout(() => {
       setStamps((current) => current.filter((item) => item.id !== id));
-    }, 1450);
+    }, 1550);
   }, []);
 
   const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
@@ -60,7 +61,7 @@ export default function Home() {
     const y = event.clientY - rect.top;
     const distance = Math.hypot(x - lastPoint.current.x, y - lastPoint.current.y);
 
-    if (distance > 72) {
+    if (distance > 88) {
       lastPoint.current = { x, y };
       leaveStamp(x, y);
     }
@@ -92,8 +93,7 @@ export default function Home() {
           </a>
           <nav aria-label="主要ナビゲーション">
             <a href="#作品">作品</a>
-            <a href="#物語">物語</a>
-            <a href="#制作">制作ノート</a>
+            <a href="#物語">あらすじ</a>
           </nav>
           <p>短編映画</p>
         </header>
@@ -116,19 +116,21 @@ export default function Home() {
         </div>
 
         <div className="hero-copy" id="top">
-          <p className="eyebrow">二〇二六年・短編映画</p>
-          <h1 id="film-title">小満</h1>
+          <p className="eyebrow">短編映画</p>
+          <h1 id="film-title">
+            <img src="/brand/shoman-title.png" alt="小満" />
+          </h1>
           <div className="synopsis" id="物語">
             <p>
-              初夏の雨が止むころ、故郷へ戻ったひとりの女性が、空き家に残された小さな気配をたどる物語。
+              六年ぶりに母・紅梅と再会した高校生の小満。ぎこちない距離を抱えた母娘は、花火の夜と閉館後のプールをともに駆け抜ける。
             </p>
             <p>
-              満ちきる直前の季節に惹かれ、田に水が入る数日間の光と風を記録したことから撮影が始まった。
+              泳ぎを教える時間、幼い水着、稲穂を揺らす風。離れていた六年を埋めるように近づき、また別れる二人の短い帰郷を描く。
             </p>
           </div>
         </div>
 
-        <p className="hero-note">画面の上で、ゆっくりとカーソルを動かしてください。</p>
+        <p className="hero-note">カーソルをゆっくり動かすと、記憶の断片が現れます。</p>
         <a className="scroll-cue" href="#作品" aria-label="作品を見る">
           <span>下へ</span>
           <span aria-hidden="true">↓</span>
@@ -139,17 +141,17 @@ export default function Home() {
         <div className="works-intro">
           <p className="section-index">〇一</p>
           <div>
-            <p className="kicker">場面と記憶</p>
+            <p className="kicker">映画「小満」</p>
             <h2 id="works-title">作品スチル</h2>
           </div>
           <p className="works-description">
-            水、風、空き家、帰り道。物語を形づくる断片を、時間の順序から離して並べる。
+            母と娘が過ごす、短い二日間。食卓、雑貨店、稲田、泳ぎ、そして別れの朝。
           </p>
         </div>
 
         <div className="masonry">
           {gallery.map((item, index) => (
-            <figure key={`${item.src}-${index}`} className="still">
+            <figure key={item.src} className="still">
               <img
                 src={item.src}
                 alt={`映画「小満」の作品スチル ${String(index + 1).padStart(2, '0')}`}
@@ -164,32 +166,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="production" id="制作" aria-labelledby="production-title">
-        <p className="section-index">〇二</p>
-        <h2 id="production-title">制作について</h2>
-        <dl>
-          <div>
-            <dt>監督・脚本</dt>
-            <dd>氏名を入力</dd>
-          </div>
-          <div>
-            <dt>撮影地</dt>
-            <dd>日本・山間の町</dd>
-          </div>
-          <div>
-            <dt>上映時間</dt>
-            <dd>十八分</dd>
-          </div>
-          <div>
-            <dt>完成年</dt>
-            <dd>二〇二六</dd>
-          </div>
-        </dl>
-      </section>
-
       <footer>
         <p>小満</p>
-        <p>短編映画・二〇二六</p>
+        <p>短編映画</p>
         <a href="#top">先頭へ戻る ↑</a>
       </footer>
     </main>
