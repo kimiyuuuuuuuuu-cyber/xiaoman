@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const stills = Array.from(
-  { length: 12 },
+  { length: 20 },
   (_, index) => `/stills-real/${String(index + 1).padStart(2, '0')}.jpg`,
 );
 
@@ -20,6 +20,14 @@ const gallery = [
   { src: stills[2], ratio: '5 / 4', position: 'center' },
   { src: stills[10], ratio: '3 / 4', position: '42% center' },
   { src: stills[11], ratio: '16 / 9', position: 'center' },
+  { src: stills[12], ratio: '16 / 9', position: '58% center' },
+  { src: stills[13], ratio: '16 / 9', position: '64% center' },
+  { src: stills[14], ratio: '16 / 9', position: 'center' },
+  { src: stills[15], ratio: '16 / 9', position: 'center' },
+  { src: stills[16], ratio: '16 / 9', position: 'center' },
+  { src: stills[17], ratio: '16 / 9', position: 'center' },
+  { src: stills[18], ratio: '16 / 9', position: '36% center' },
+  { src: stills[19], ratio: '16 / 9', position: '50% center' },
 ];
 const scriptPages = Array.from(
   { length: 19 },
@@ -52,6 +60,8 @@ export default function Home() {
 
   const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
     if (event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
+    const target = event.target as Element;
+    if (event.clientY <= 60 || target.closest('.site-header')) return;
     const rect = heroRef.current?.getBoundingClientRect();
     if (!rect) return;
     const x = event.clientX - rect.left;
@@ -109,10 +119,10 @@ export default function Home() {
           if (rect) leaveStamp(event.clientX - rect.left, event.clientY - rect.top);
         }}
       >
-        <header className="site-header">
+        <header className="site-header" onPointerEnter={() => setStamps([])}>
           <a href="#top" className="wordmark" aria-label="小満・先頭へ">小満</a>
           <nav aria-label="主要ナビゲーション">
-            <a href="#作品">作品</a>
+            <a href="#作品">作品スチル</a>
             <a href="#クレジット">クレジット</a>
             <a href="#脚本">脚本</a>
           </nav>
@@ -138,16 +148,18 @@ export default function Home() {
 
         <div className="hero-copy" id="top">
           <p className="eyebrow">短編映画</p>
-          <h1 id="film-title"><img src="/brand/shoman-title-user-en.png" alt="小満 — Whose Summer Was It" /></h1>
-          <div className="synopsis" id="物語">
-            <p>六年ぶりに母・紅梅と再会した高校生の小満。ぎこちない距離を抱えた母娘は、花火の夜と閉館後のプールをともに駆け抜ける。</p>
-            <p>泳ぎを教える時間、幼い水着、稲穂を揺らす風。離れていた六年を埋めるように近づき、また別れる二人の短い帰郷を描く。</p>
+          <div className="hero-title-group">
+            <h1 id="film-title"><img src="/brand/shoman-title-user-en.png" alt="小満 — Whose Summer Was It" /></h1>
+            <a className="film-link" href="#映像" aria-label="本編映像の入口へ">
+              <span>本編を見る</span><span aria-hidden="true">↘</span>
+            </a>
+            <div className="synopsis" id="物語">
+              <p>六年ぶりに母・紅梅と再会した高校生の小満。ぎこちない距離を抱えた母娘は、花火の夜と閉館後のプールをともに駆け抜ける。</p>
+              <p>泳ぎを教える時間、幼い水着、稲穂を揺らす風。離れていた六年を埋めるように近づき、また別れる二人の短い帰郷を描く。</p>
+            </div>
           </div>
         </div>
 
-        <a className="film-link" href="#映像" aria-label="本編映像の入口へ">
-          <span>本編を見る</span><span aria-hidden="true">↘</span>
-        </a>
         <p className="hero-note">カーソルを動かすと、記憶の断片が現れます。</p>
         <a className="scroll-cue" href="#作品" aria-label="作品を見る">
           <span>作品スチル</span><span aria-hidden="true">↓</span>
@@ -163,7 +175,6 @@ export default function Home() {
           </div>
           <div className="works-description">
             <p>母と娘が過ごす、短い三日間。</p>
-            <p className="film-placeholder">本編リンク準備中</p>
           </div>
         </div>
 
@@ -195,11 +206,13 @@ export default function Home() {
         </div>
         <div className="credits-compact">
           <div>
-            <p className="kicker">DIRECTOR</p>
             <h2 id="credits-title">虞 礼鋒</h2>
             <p className="credit-name-en">Kimi Yu</p>
           </div>
-          <p className="credit-roles">監督・脚本・撮影監督・編集・カラーグレーディング・<strong>音楽デザイン</strong></p>
+          <div className="credit-responsibilities">
+            <p className="credit-responsibility-title">『小満』における主な担当</p>
+            <p className="credit-roles">監督・脚本・撮影監督・編集・カラーグレーディング・<strong>音楽デザイン</strong></p>
+          </div>
         </div>
       </section>
 
@@ -221,13 +234,13 @@ export default function Home() {
           ))}
         </div>
 
-        <a className="storyboard-link" href="/documents/shoman-storyboard-ja.pdf" target="_blank" rel="noreferrer">
+        <a id="絵コンテ" className="storyboard-link" href="/documents/shoman-storyboard-ja.pdf" target="_blank" rel="noreferrer">
           <div>
             <p className="kicker">STORYBOARD</p>
             <h3>日本語版絵コンテ</h3>
             <span>全41頁のPDFを見る</span>
           </div>
-          <img src="/documents/storyboard-cover.png" alt="『小満』日本語版絵コンテの表紙" />
+          <img src="/documents/storyboard-cover-still.jpg" alt="木立の道を歩く母娘" />
           <span className="storyboard-arrow" aria-hidden="true">↗</span>
         </a>
       </section>

@@ -47,17 +47,19 @@ button { font: inherit; }
   min-height: 60px;
   padding: 0 20px;
   border-bottom: 1px solid var(--line);
-  font-size: 11px;
-  letter-spacing: 0.06em;
+  font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", "Hiragino Sans", sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
 }
 
 .site-header .wordmark {
   justify-self: start;
   font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
-  font-size: 17px;
+  font-size: 15px;
 }
 
-.site-header nav { display: flex; gap: 30px; }
+.site-header nav { display: flex; gap: 26px; }
 .site-header > p { justify-self: end; margin: 0; }
 
 .site-header a,
@@ -114,11 +116,16 @@ footer a:hover { color: var(--green); }
   letter-spacing: 0.12em;
 }
 
-.hero-copy h1 {
+.hero-title-group {
   position: absolute;
   top: 8svh;
   right: -3vw;
   width: clamp(520px, 54vw, 780px);
+  aspect-ratio: 1014 / 1004;
+}
+
+.hero-copy h1 {
+  width: 100%;
   margin: 0;
   line-height: 0;
 }
@@ -132,12 +139,13 @@ footer a:hover { color: var(--green); }
 .synopsis {
   position: absolute;
   right: auto;
-  left: 52vw;
-  bottom: 74px;
+  left: 8%;
+  top: 86.5%;
+  bottom: auto;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
-  width: min(32vw, 480px);
+  width: 60%;
   color: var(--green);
   font-size: clamp(10px, 0.8vw, 13px);
   line-height: 1.7;
@@ -153,10 +161,10 @@ footer p { margin: 0; }
 .film-link {
   position: absolute;
   z-index: 50;
-  top: auto;
-  right: 20px;
-  bottom: 78px;
-  left: auto;
+  top: 78%;
+  right: auto;
+  bottom: auto;
+  left: 36%;
   display: flex;
   justify-content: space-between;
   width: 170px;
@@ -165,6 +173,7 @@ footer p { margin: 0; }
   border-bottom: 1px solid var(--line);
   font-size: 11px;
   letter-spacing: 0.08em;
+  pointer-events: auto;
 }
 
 .hero-note {
@@ -239,19 +248,12 @@ footer {
   color: var(--green);
 }
 
-.film-placeholder {
-  margin: 18px 0 0;
-  padding-top: 9px;
-  border-top: 1px solid rgba(166, 201, 93, 0.35);
-  color: rgba(242, 241, 237, 0.4);
-}
-
 .masonry {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   width: 100%;
-  max-width: 1120px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: 54px 8px 120px;
 }
@@ -345,13 +347,28 @@ footer {
 .section-meta p { margin: 0; }
 .section-meta p:nth-child(2) { justify-self: center; }
 
+.credits {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100svh;
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.66) 0%, rgba(5, 5, 5, 0.3) 52%, rgba(5, 5, 5, 0.16) 100%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.08) 0%, rgba(5, 5, 5, 0.52) 100%),
+    url('/credits-background.jpg') center / cover no-repeat;
+}
+
+.credits .section-meta {
+  background: rgba(5, 5, 5, 0.18);
+  backdrop-filter: blur(2px);
+}
+
 .credits-compact {
   display: grid;
-  grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.28fr);
-  align-items: end;
-  gap: 8vw;
-  min-height: 390px;
-  padding: 70px 7vw 62px;
+  grid-template-columns: minmax(240px, 0.62fr) minmax(0, 1.38fr);
+  align-items: start;
+  gap: 7vw;
+  min-height: calc(100svh - 56px);
+  padding: 12svh 7vw 62px;
 }
 
 .credits h2 {
@@ -367,14 +384,35 @@ footer {
   letter-spacing: 0.16em;
 }
 
+.credit-responsibilities {
+  width: 100%;
+}
+
+.credit-responsibility-title {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0 0 26px;
+  color: rgba(242, 241, 237, 0.72);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.credit-responsibility-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
 .credit-roles {
-  max-width: 720px;
+  max-width: none;
   margin: 0;
-  padding-top: 18px;
-  border-top: 1px solid var(--line);
+  padding: 0;
   color: rgba(242, 241, 237, 0.76);
-  font-size: clamp(0.92rem, 1.35vw, 1.18rem);
-  line-height: 2;
+  font-size: clamp(0.88rem, 1.15vw, 1.08rem);
+  line-height: 1.85;
   letter-spacing: 0.03em;
 }
 
@@ -568,19 +606,20 @@ footer {
   .site-header nav { display: none; }
 
   .hero-copy { padding: 60px 14px 20px; }
-  .hero-copy h1 { top: 15svh; right: -18vw; width: 112vw; }
+  .hero-title-group { top: 15svh; right: -18vw; width: 112vw; }
   .eyebrow { left: 14px; bottom: 22px; }
 
   .synopsis {
     right: auto;
-    left: 14px;
-    bottom: 82px;
+    left: 0;
+    top: 95%;
+    bottom: auto;
     grid-template-columns: 1fr;
     gap: 8px;
-    width: min(72vw, 310px);
+    width: 72%;
   }
 
-  .film-link { right: 14px; bottom: 128px; left: auto; width: 132px; }
+  .film-link { top: 78%; right: auto; bottom: auto; left: 36%; width: 132px; }
   .hero-note { display: none; }
   .scroll-cue { right: 14px; bottom: 22px; }
   .trail-image { width: 178px; height: 111px; }
@@ -609,12 +648,18 @@ footer {
 
   .credits-compact {
     display: block;
-    min-height: 310px;
+    min-height: calc(100svh - 56px);
     padding: 60px 14px 46px;
   }
 
+  .credits { background-position: 28% center; }
+
   .credits h2 { font-size: clamp(3rem, 16vw, 5rem); }
   .credit-roles { margin-top: 54px; font-size: 0.9rem; line-height: 1.9; }
+
+  .credit-responsibilities { margin-top: 54px; }
+  .credit-responsibility-title { margin-bottom: 20px; white-space: normal; }
+  .credit-roles { margin-top: 0; }
 
   .documents { padding-bottom: 80px; }
   .documents-heading { display: block; min-height: 165px; padding: 36px 14px 28px; }
