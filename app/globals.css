@@ -199,6 +199,7 @@ footer p { margin: 0; }
 
 .works,
 .credits,
+.director-note,
 .documents {
   position: relative;
   border-top: 1px solid var(--line);
@@ -433,6 +434,63 @@ footer {
 }
 
 .credit-roles strong { color: inherit; font-weight: 700; }
+
+.director-note {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+  background: url('/director-statement-background.jpg') 44% center / cover no-repeat;
+}
+
+.director-note::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.03) 0%, rgba(5, 5, 5, 0.08) 38%, rgba(5, 5, 5, 0.64) 61%, rgba(5, 5, 5, 0.9) 100%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.08), rgba(5, 5, 5, 0.38));
+}
+
+.director-note-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: min(50vw, 760px);
+  min-height: 100svh;
+  margin-left: auto;
+  padding: 9svh 5vw 8svh 4vw;
+}
+
+.director-note-heading {
+  margin-bottom: 32px;
+}
+
+.director-note h2 {
+  margin: 0;
+  color: rgba(242, 241, 237, 0.88);
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(2rem, 3.2vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.director-note-copy {
+  color: rgba(242, 241, 237, 0.82);
+  font-size: clamp(10px, 0.78vw, 13px);
+  line-height: 1.9;
+  letter-spacing: 0.025em;
+}
+
+.director-note-copy p {
+  margin: 0 0 17px;
+}
+
+.director-note-copy p:last-child {
+  margin-bottom: 0;
+}
 
 .documents { padding-bottom: 120px; }
 
@@ -733,6 +791,26 @@ footer {
   .credit-responsibilities { margin-top: 54px; }
   .credit-responsibility-title { margin-bottom: 20px; white-space: normal; }
   .credit-roles { margin-top: 0; }
+
+  .director-note {
+    min-height: auto;
+    background-position: 35% top;
+  }
+
+  .director-note::before {
+    background: linear-gradient(180deg, rgba(5, 5, 5, 0.28) 0%, rgba(5, 5, 5, 0.8) 42%, rgba(5, 5, 5, 0.96) 100%);
+  }
+
+  .director-note-inner {
+    justify-content: flex-start;
+    width: 100%;
+    min-height: auto;
+    padding: 44svh 14px 72px;
+  }
+
+  .director-note-heading { margin-bottom: 26px; }
+  .director-note h2 { font-size: clamp(2rem, 10vw, 3rem); }
+  .director-note-copy { font-size: 11px; line-height: 1.9; }
 
   .documents { padding-bottom: 80px; }
   .documents-heading { min-height: 165px; padding: 22px 14px 24px; }
