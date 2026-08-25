@@ -34,6 +34,39 @@ const scriptPages = Array.from(
   (_, index) => `/documents/script-pages/page-${String(index + 2).padStart(2, '0')}.jpg`,
 );
 
+const characters = [
+  {
+    id: '紅梅',
+    className: 'character-page--hongmei',
+    number: '01',
+    romanized: 'LI HONGMEI',
+    name: '李 紅梅',
+    facts: ['46歳', '高速鉄道駅の清掃員', '忍耐強く、草のようにしなやかで頑固'],
+    lead: '冬の葦原で、楠の湯桶に入れられた赤ん坊として拾われた紅梅。血のつながりよりも深い愛情に育てられながら、幼い頃から「自分が家族に負担をかけたのではないか」という罪悪感を抱えてきた。',
+    paragraphs: [
+      '養父・李岱維は鉱山で働き、出稼ぎに出るたび紅梅へ小さな贈り物を作った。最後の贈り物は、彼女が拾われた湯桶から作った小さな氷橇だった。六歳の冬、父は鉱山事故で亡くなる。残された母・繍娘を支えるため、紅梅は針仕事と家事を覚え、泣くことより先に耐えることを身につけた。',
+      '十六歳で故郷を離れ、都市の金具工房へ入る。油にまみれた手で出来高を積み上げ、夜は縫製工場の検品を続けた。八年間、一度も正月に帰らず、稼ぎを母へ送り続ける。やがて縫製と管理を学び、工場の中核となり、自分の力で都市に小さな居場所を築いた。',
+      '王剛と出会い、結婚して娘・小満を授かる。故郷へ戻り、母と夫と娘に囲まれた時間は、紅梅の人生でもっとも穏やかな日々だった。しかし息子が生まれて七日目、フェニルケトン尿症と診断される。治療費と家族の圧力に耐えきれなくなった夫は家を去り、紅梅は再び一人で家族を背負うことになる。',
+      '四十歳で子どもたちを母に託し、再び都市へ出た。高速鉄道駅の清掃員として、六年間、誰よりも透明なガラスを磨き続ける。綿菓子を持つ子どもが窓に残す跡を見るたび、産院の窓へ小さな手を押し当てた小満の姿がよみがえる。紅梅の強さは、傷つかないことではなく、傷を抱えたまま働き、愛し続けることにある。',
+    ],
+  },
+  {
+    id: '小満',
+    className: 'character-page--xiaoman',
+    number: '02',
+    romanized: 'LI XIAOMAN',
+    name: '李 小満',
+    facts: ['14歳', '中学生', '内向的で敏感、寂しさを隠すように強がる'],
+    lead: '父は家を去り、母は遠い都市で働く。祖母と弟と暮らす小満は、母を待つ時間のなかで、甘えるより先に自分を守る方法を覚えた。冷たさも反抗も、ほんとうは見捨てられたくないという願いの裏返しである。',
+    paragraphs: [
+      '幼い頃、風が吹くたび母は空を指して言った。「この雲が見えるかぎり、私たちは同じ空の下にいる」。小満はそれを信じ、母が働きに出たあとも、毎日その言葉を胸の中で繰り返した。しかし届くのは短く慌ただしい電話ばかりで、学校では「親のいない子」とからかわれた。彼女は泣く代わりに黙り込み、弟の前では頼れる姉でいようとした。',
+      '本を読み、日記を書き、母と過ごした昔の絵を描くことが好きだ。けれど思春期に入ると、抑え込んだ寂しさは反抗へ変わる。教師に逆らい、派手な服や口紅で周囲との差を誇示する。母から電話が来ても素っ気なく答え、ときには切ってしまう。それは母を嫌っているからではなく、母がまだ自分を必要としているか確かめるためだった。',
+      '母が六年ぶりの春節にも帰れないと告げた夜、小満の感情はついに決壊する。「私のことを考えたことがある？」「帰ってこないなら、もうお母さんと呼ばない」。怒りの奥にあったのは、何年も言葉にできなかった孤独と、母の愛を失うことへの恐怖だった。',
+      '電話を切ったあと、枕元の古い写真を見る。そこには母の腕の中で笑う幼い自分がいる。空の約束を思い出しながらも、今の小満に見えるのは薄い隔たりだけだ。彼女は強くなったのではない。母を待ち続けるために、強く見える殻を身につけたのである。',
+    ],
+  },
+];
+
 type Stamp = { id: number; src: string; x: number; y: number; angle: number };
 
 export default function Home() {
@@ -247,6 +280,40 @@ export default function Home() {
             <p>この母娘関係を、重い嘆きではなく、軽やかで余白があり、ときに笑みのこぼれる語り口で描きたいと考えました。涙や叫びで何かを確かめ合う必要はありません。三日間をともに過ごしたあと、二人がただ気づけばよいのです。私たちは今も、母と娘になる方法を学び続けている。そして今も、互いに近づこうとしているのだと。</p>
           </div>
         </div>
+      </section>
+
+      <section className="characters" id="人物" aria-labelledby="characters-title">
+        <header className="characters-heading">
+          <p className="kicker">CHARACTER PORTRAITS</p>
+          <h2 id="characters-title">人物小伝</h2>
+        </header>
+
+        {characters.map((character) => (
+          <article
+            className={`character-page ${character.className}`}
+            id={character.id}
+            key={character.id}
+            aria-labelledby={`${character.id}-title`}
+          >
+            <div className="character-copy">
+              <div className="character-label">
+                <span>{character.number}</span>
+                <span>{character.romanized}</span>
+              </div>
+              <h3 id={`${character.id}-title`}>{character.name}</h3>
+              <ul className="character-facts" aria-label={`${character.id}の基本情報`}>
+                {character.facts.map((fact) => <li key={fact}>{fact}</li>)}
+              </ul>
+              <p className="character-lead">{character.lead}</p>
+              <details className="character-details">
+                <summary><span>続きを読む</span><span aria-hidden="true">＋</span></summary>
+                <div className="character-details-copy">
+                  {character.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                </div>
+              </details>
+            </div>
+          </article>
+        ))}
       </section>
 
       <section className="documents" id="脚本" aria-labelledby="documents-title">
