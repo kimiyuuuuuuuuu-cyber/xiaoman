@@ -356,10 +356,23 @@ footer {
   display: grid;
   grid-template-rows: 1fr;
   min-height: 100svh;
+  border-top: 0;
   background:
     linear-gradient(90deg, rgba(5, 5, 5, 0.66) 0%, rgba(5, 5, 5, 0.3) 52%, rgba(5, 5, 5, 0.16) 100%),
     linear-gradient(180deg, rgba(5, 5, 5, 0.08) 0%, rgba(5, 5, 5, 0.52) 100%),
     url('/credits-background.jpg') center / cover no-repeat;
+}
+
+.credits::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+  height: clamp(92px, 13svh, 150px);
+  background: linear-gradient(180deg, var(--black) 0%, rgba(5, 5, 5, 0.34) 58%, transparent 100%);
+  pointer-events: none;
 }
 
 .credits::after {
@@ -380,6 +393,8 @@ footer {
 }
 
 .credits-compact {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(240px, 0.62fr) minmax(0, 1.38fr);
   align-items: start;
