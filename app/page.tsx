@@ -30,8 +30,8 @@ const gallery = [
   { src: stills[19], ratio: '16 / 9', position: '50% center' },
 ];
 const scriptPages = Array.from(
-  { length: 19 },
-  (_, index) => `/documents/script-pages/page-${String(index + 1).padStart(2, '0')}.jpg`,
+  { length: 18 },
+  (_, index) => `/documents/script-pages/page-${String(index + 2).padStart(2, '0')}.jpg`,
 );
 
 type Stamp = { id: number; src: string; x: number; y: number; angle: number };
@@ -39,6 +39,7 @@ type Stamp = { id: number; src: string; x: number; y: number; angle: number };
 export default function Home() {
   const [stamps, setStamps] = useState<Stamp[]>([]);
   const [activeImage, setActiveImage] = useState<number | null>(null);
+  const [activeScriptPage, setActiveScriptPage] = useState<number | null>(null);
   const nextId = useRef(0);
   const lastPoint = useRef({ x: -200, y: -200 });
   const heroRef = useRef<HTMLElement>(null);
@@ -85,6 +86,18 @@ export default function Home() {
     );
   }, []);
 
+  const showPreviousScriptPage = useCallback(() => {
+    setActiveScriptPage((current) =>
+      current === null ? null : (current - 1 + scriptPages.length) % scriptPages.length,
+    );
+  }, []);
+
+  const showNextScriptPage = useCallback(() => {
+    setActiveScriptPage((current) =>
+      current === null ? null : (current + 1) % scriptPages.length,
+    );
+  }, []);
+
   useEffect(() => {
     const reset = () => { lastPoint.current = { x: -200, y: -200 }; };
     window.addEventListener('blur', reset);
@@ -92,20 +105,25 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (activeImage === null) return;
+    if (activeImage === null && activeScriptPage === null) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setActiveImage(null);
-      if (event.key === 'ArrowLeft') showPrevious();
-      if (event.key === 'ArrowRight') showNext();
+      if (event.key === 'Escape') {
+        setActiveImage(null);
+        setActiveScriptPage(null);
+      }
+      if (activeImage !== null && event.key === 'ArrowLeft') showPrevious();
+      if (activeImage !== null && event.key === 'ArrowRight') showNext();
+      if (activeScriptPage !== null && event.key === 'ArrowLeft') showPreviousScriptPage();
+      if (activeScriptPage !== null && event.key === 'ArrowRight') showNextScriptPage();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [activeImage, showNext, showPrevious]);
+  }, [activeImage, activeScriptPage, showNext, showNextScriptPage, showPrevious, showPreviousScriptPage]);
 
   return (
     <main>
@@ -168,7 +186,6 @@ export default function Home() {
 
       <section className="works" id="作品" aria-labelledby="works-title">
         <div className="works-intro" id="映像">
-          <p className="section-index">〇一</p>
           <div>
             <p className="kicker">FILM STILLS</p>
             <h2 id="works-title">作品スチル</h2>
@@ -215,19 +232,27 @@ export default function Home() {
       </section>
 
       <section className="documents" id="脚本" aria-labelledby="documents-title">
-        <div className="section-meta">
-          <p className="section-index">〇三</p><p>制作資料</p><p>日本語版・19頁</p>
+        <div className="section-meta documents-meta">
+          <p>制作資料</p><p>日本語版・本文18頁</p>
         </div>
         <div className="documents-heading">
           <p className="kicker">SCREENPLAY</p>
           <h2 id="documents-title">日本語版脚本</h2>
         </div>
 
-        <div className="script-pages" aria-label="『小満』日本語版脚本・全19頁">
+        <div className="script-pages" aria-label="『小満』日本語版脚本・本文全18頁">
           {scriptPages.map((page, index) => (
             <figure className="script-page" key={page}>
-              <figcaption>{String(index + 1).padStart(2, '0')} / 19</figcaption>
-              <img src={page} alt={`『小満』日本語版脚本 ${index + 1}頁`} loading={index === 0 ? 'eager' : 'lazy'} />
+              <figcaption>{String(index + 1).padStart(2, '0')} / 18</figcaption>
+              <button
+                type="button"
+                className="script-page-button"
+                onClick={() => setActiveScriptPage(index)}
+                aria-label={`『小満』日本語版脚本 ${index + 1}頁を拡大`}
+              >
+                <img src={page} alt={`『小満』日本語版脚本 ${index + 1}頁`} loading={index === 0 ? 'eager' : 'lazy'} />
+                <span>拡大 ↗</span>
+              </button>
             </figure>
           ))}
         </div>
@@ -257,6 +282,19 @@ export default function Home() {
             <figcaption><span>小満</span><span>{String(activeImage + 1).padStart(2, '0')} / {gallery.length}</span></figcaption>
           </figure>
           <button className="lightbox-nav lightbox-nav--next" type="button" onClick={showNext} aria-label="次の画像">→</button>
+        </div>
+      )}
+
+      {activeScriptPage !== null && (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label="脚本拡大表示">
+          <button className="lightbox-backdrop" type="button" onClick={() => setActiveScriptPage(null)} aria-label="閉じる" />
+          <button className="lightbox-close" type="button" onClick={() => setActiveScriptPage(null)} aria-label="閉じる">閉じる ×</button>
+          <button className="lightbox-nav lightbox-nav--prev" type="button" onClick={showPreviousScriptPage} aria-label="前の頁">←</button>
+          <figure className="lightbox-figure lightbox-figure--script">
+            <img src={scriptPages[activeScriptPage]} alt={`日本語版脚本 ${activeScriptPage + 1}頁`} />
+            <figcaption><span>日本語版脚本</span><span>{String(activeScriptPage + 1).padStart(2, '0')} / {scriptPages.length}</span></figcaption>
+          </figure>
+          <button className="lightbox-nav lightbox-nav--next" type="button" onClick={showNextScriptPage} aria-label="次の頁">→</button>
         </div>
       )}
     </main>
