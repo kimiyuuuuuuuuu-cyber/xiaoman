@@ -349,7 +349,7 @@ footer {
 
 .credits {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 1fr;
   min-height: 100svh;
   background:
     linear-gradient(90deg, rgba(5, 5, 5, 0.66) 0%, rgba(5, 5, 5, 0.3) 52%, rgba(5, 5, 5, 0.16) 100%),
@@ -367,7 +367,7 @@ footer {
   grid-template-columns: minmax(240px, 0.62fr) minmax(0, 1.38fr);
   align-items: start;
   gap: 7vw;
-  min-height: calc(100svh - 56px);
+  min-height: 100svh;
   padding: 12svh 7vw 62px;
 }
 
@@ -384,14 +384,17 @@ footer {
   text-align: left;
 }
 
+.credit-name-kana,
 .credit-name-en {
   width: 100%;
-  margin: 14px 0 0;
   padding: 0;
   color: rgba(242, 241, 237, 0.62);
   font-size: 12px;
   letter-spacing: 0.16em;
 }
+
+.credit-name-kana { margin: 16px 0 0; }
+.credit-name-en { margin: 8px 0 0; }
 
 .credit-responsibilities {
   width: 100%;
@@ -659,7 +662,7 @@ footer {
 
   .credits-compact {
     display: block;
-    min-height: calc(100svh - 56px);
+    min-height: 100svh;
     padding: 60px 14px 46px;
   }
 

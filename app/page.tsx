@@ -201,12 +201,10 @@ export default function Home() {
       </section>
 
       <section className="credits" id="クレジット" aria-labelledby="credits-title">
-        <div className="section-meta">
-          <p className="section-index">〇二</p><p>クレジット</p><p>短編映画「小満」</p>
-        </div>
         <div className="credits-compact">
           <div className="credit-identity">
             <h2 id="credits-title">虞 礼鋒</h2>
+            <p className="credit-name-kana">グ　レイホウ</p>
             <p className="credit-name-en">Kimi Yu</p>
           </div>
           <div className="credit-responsibilities">
