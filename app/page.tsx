@@ -73,6 +73,7 @@ export default function Home() {
   const [stamps, setStamps] = useState<Stamp[]>([]);
   const [activeImage, setActiveImage] = useState<number | null>(null);
   const [activeScriptPage, setActiveScriptPage] = useState<number | null>(null);
+  const [activeCharacter, setActiveCharacter] = useState<number | null>(null);
   const nextId = useRef(0);
   const lastPoint = useRef({ x: -200, y: -200 });
   const heroRef = useRef<HTMLElement>(null);
@@ -138,25 +139,32 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (activeImage === null && activeScriptPage === null) return;
+    if (activeImage === null && activeScriptPage === null && activeCharacter === null) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setActiveImage(null);
         setActiveScriptPage(null);
+        setActiveCharacter(null);
       }
       if (activeImage !== null && event.key === 'ArrowLeft') showPrevious();
       if (activeImage !== null && event.key === 'ArrowRight') showNext();
       if (activeScriptPage !== null && event.key === 'ArrowLeft') showPreviousScriptPage();
       if (activeScriptPage !== null && event.key === 'ArrowRight') showNextScriptPage();
+      if (activeCharacter !== null && event.key === 'ArrowLeft') {
+        setActiveCharacter((activeCharacter - 1 + characters.length) % characters.length);
+      }
+      if (activeCharacter !== null && event.key === 'ArrowRight') {
+        setActiveCharacter((activeCharacter + 1) % characters.length);
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [activeImage, activeScriptPage, showNext, showNextScriptPage, showPrevious, showPreviousScriptPage]);
+  }, [activeCharacter, activeImage, activeScriptPage, showNext, showNextScriptPage, showPrevious, showPreviousScriptPage]);
 
   return (
     <main>
@@ -288,14 +296,15 @@ export default function Home() {
           <h2 id="characters-title">人物小伝</h2>
         </header>
 
-        {characters.map((character) => (
-          <article
-            className={`character-page ${character.className}`}
-            id={character.id}
-            key={character.id}
-            aria-labelledby={`${character.id}-title`}
-          >
-            <div className="character-copy">
+        <div className="characters-grid">
+          {characters.map((character, index) => (
+            <article
+              className="character-card"
+              id={character.id}
+              key={character.id}
+              aria-labelledby={`${character.id}-title`}
+            >
+              <div className="character-copy">
               <div className="character-label">
                 <span>{character.number}</span>
                 <span>{character.romanized}</span>
@@ -305,15 +314,13 @@ export default function Home() {
                 {character.facts.map((fact) => <li key={fact}>{fact}</li>)}
               </ul>
               <p className="character-lead">{character.lead}</p>
-              <details className="character-details">
-                <summary><span>続きを読む</span><span aria-hidden="true">＋</span></summary>
-                <div className="character-details-copy">
-                  {character.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                </div>
-              </details>
-            </div>
-          </article>
-        ))}
+                <button className="character-more" type="button" onClick={() => setActiveCharacter(index)}>
+                  <span>続きを読む</span><span aria-hidden="true">↗</span>
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="documents" id="脚本" aria-labelledby="documents-title">
@@ -380,6 +387,39 @@ export default function Home() {
             <figcaption><span>日本語版脚本</span><span>{String(activeScriptPage + 1).padStart(2, '0')} / {scriptPages.length}</span></figcaption>
           </figure>
           <button className="lightbox-nav lightbox-nav--next" type="button" onClick={showNextScriptPage} aria-label="次の頁">→</button>
+        </div>
+      )}
+
+      {activeCharacter !== null && (
+        <div className="lightbox character-modal" role="dialog" aria-modal="true" aria-labelledby="character-modal-title">
+          <button className="lightbox-backdrop" type="button" onClick={() => setActiveCharacter(null)} aria-label="閉じる" />
+          <button className="lightbox-close" type="button" onClick={() => setActiveCharacter(null)} aria-label="閉じる">閉じる ×</button>
+          <button
+            className="lightbox-nav lightbox-nav--prev"
+            type="button"
+            onClick={() => setActiveCharacter((activeCharacter - 1 + characters.length) % characters.length)}
+            aria-label="前の人物"
+          >←</button>
+          <article className="character-modal-panel">
+            <div className="character-label">
+              <span>{characters[activeCharacter].number}</span>
+              <span>{characters[activeCharacter].romanized}</span>
+            </div>
+            <h3 id="character-modal-title">{characters[activeCharacter].name}</h3>
+            <ul className="character-facts" aria-label={`${characters[activeCharacter].id}の基本情報`}>
+              {characters[activeCharacter].facts.map((fact) => <li key={fact}>{fact}</li>)}
+            </ul>
+            <div className="character-details-copy">
+              <p>{characters[activeCharacter].lead}</p>
+              {characters[activeCharacter].paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            </div>
+          </article>
+          <button
+            className="lightbox-nav lightbox-nav--next"
+            type="button"
+            onClick={() => setActiveCharacter((activeCharacter + 1) % characters.length)}
+            aria-label="次の人物"
+          >→</button>
         </div>
       )}
     </main>
