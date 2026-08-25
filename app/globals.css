@@ -397,7 +397,9 @@ footer {
   z-index: 1;
   display: grid;
   grid-template-columns: minmax(240px, 0.62fr) minmax(0, 1.38fr);
-  align-items: start;
+  grid-template-rows: max-content;
+  align-content: start;
+  align-items: end;
   gap: 7vw;
   min-height: 100svh;
   padding: 12svh 7vw 62px;
