@@ -622,12 +622,11 @@ footer {
   display: flex;
   align-items: center;
   min-width: 0;
-  background: linear-gradient(90deg, rgba(5, 5, 5, 0.52), rgba(5, 5, 5, 0.16));
-  transition: background 500ms ease, backdrop-filter 500ms ease;
+  background: transparent;
 }
 
-.character-card:nth-child(2) { background: linear-gradient(270deg, rgba(5, 5, 5, 0.58), rgba(5, 5, 5, 0.18)); }
-.character-card:hover { background-color: rgba(5, 5, 5, 0.28); backdrop-filter: blur(2px); }
+.character-card:nth-child(2),
+.character-card:hover { background: transparent; }
 
 .character-copy {
   position: relative;
