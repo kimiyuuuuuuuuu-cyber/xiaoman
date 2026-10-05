@@ -227,7 +227,7 @@ export default function Home() {
             <h1 id="film-title"><img src="/brand/shoman-title-user-en.png" alt="小満 — Whose Summer Was It" /></h1>
             <a
               className="film-link"
-              href="https://youtu.be/2rvIpCJllzY"
+              href="https://youtu.be/___4RQfg-mQ"
               target="_blank"
               rel="noreferrer"
               aria-label="短編映画『小満』本編をYouTubeで見る"
